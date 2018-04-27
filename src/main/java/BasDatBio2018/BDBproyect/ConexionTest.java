@@ -38,6 +38,10 @@ public class ConexionTest {
             if (stmt.execute(query)) {
                 rs = stmt.getResultSet();
             }
+            
+            
+            
+            
 
            
         } catch (SQLException ex) {

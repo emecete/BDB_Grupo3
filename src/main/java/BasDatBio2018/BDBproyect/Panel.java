@@ -32,6 +32,9 @@ public class Panel extends JPanel {
 	private JTextComponent textArea;
 	private ArrayList<String> listaConsultas;
 	private JComboBox comboBox_consultas;
+	private JComboBox comboBox_Select_BD;
+	private JComboBox comboBox_optimizado;
+	private JComboBox comboBox_category;
 
 	/**
 	 * Create the panel.
@@ -58,12 +61,12 @@ public class Panel extends JPanel {
 		});
 		add(btnEjecutarConsulta);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		comboBox.setBounds(100, 155, 145, 42);
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Optimizado", "No optimizado"}));
-		comboBox.setMaximumRowCount(2);
-		add(comboBox);
+		JComboBox comboBox_optimizado = new JComboBox();
+		comboBox_optimizado.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		comboBox_optimizado.setBounds(100, 155, 145, 42);
+		comboBox_optimizado.setModel(new DefaultComboBoxModel(new String[] {"Optimizado", "No optimizado"}));
+		comboBox_optimizado.setMaximumRowCount(2);
+		add(comboBox_optimizado);
 		
 		JLabel lblTiempo = new JLabel("Tiempo :");
 		lblTiempo.setFont(new Font("Tahoma", Font.BOLD, 13));
@@ -76,7 +79,12 @@ public class Panel extends JPanel {
 		add(textField_tiempo);
 		textField_tiempo.setColumns(10);
 		
-		JComboBox comboBox_Select_BD = new JComboBox();
+		comboBox_category = new JComboBox();
+		comboBox_category.setBounds(600, 155, 145, 42);
+		comboBox_category.setModel(new DefaultComboBoxModel(new String[] {"All","Gene", "Transcript","Translation"}));
+		add(comboBox_category);
+		
+		comboBox_Select_BD = new JComboBox();
 		comboBox_Select_BD.setBounds(398, 155, 145, 42);
 		comboBox_Select_BD.setModel(new DefaultComboBoxModel(new String[] {"MySQL", "MariaDB", "SQLServer"}));
 		add(comboBox_Select_BD);
@@ -137,8 +145,15 @@ public class Panel extends JPanel {
 
 	public void resFinal(){
 		String consulta = textField_consulta.getText();
+		String SGBD = comboBox_Select_BD.getName();
+		boolean opt;
+		if(comboBox_optimizado.getName() == "Optimizado") {
+			opt = true;
+		}else {
+			opt = false;
+		}
 		
-		Conexion conex= new Conexion(consulta);
+		ConecctionAbstract conex= new ConecctionAbstract(consulta, SGBD, opt);
 		textArea.setText("Su consulta : '"+conex.get_Request()+"' ha sido realizada");
 		textField_consulta.setText("");
 		textField_tiempo.setText("Mucho tiempo");
