@@ -23,7 +23,7 @@ public class ConexionTest {
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
-        String query = "SELECT gene_id from gene";
+        String query = "SELECT gene_id, stable_id from gene";
         
         try {
             
@@ -39,9 +39,17 @@ public class ConexionTest {
                 rs = stmt.getResultSet();
             }
             
+            while ( rs.next() ) {
+                int numColumns = rs.getMetaData().getColumnCount();
+                for ( int i = 1 ; i <= numColumns ; i++ ) {
+                   // Column numbers start at 1.
+                   // Also there are many methods on the result set to return
+                   //  the column as a particular type. Refer to the Sun documentation
+                   //  for the list of valid conversions.
+                   System.out.println( "COLUMN " + i + " = " + rs.getObject(i) );
+                }
             
-            
-            
+            }
 
            
         } catch (SQLException ex) {

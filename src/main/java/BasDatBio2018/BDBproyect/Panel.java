@@ -61,7 +61,7 @@ public class Panel extends JPanel {
 		});
 		add(btnEjecutarConsulta);
 		
-		JComboBox comboBox_optimizado = new JComboBox();
+		comboBox_optimizado = new JComboBox();
 		comboBox_optimizado.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox_optimizado.setBounds(100, 155, 145, 42);
 		comboBox_optimizado.setModel(new DefaultComboBoxModel(new String[] {"Optimizado", "No optimizado"}));
@@ -144,19 +144,29 @@ public class Panel extends JPanel {
 	}
 
 	public void resFinal(){
+		long time_start, time_end;
 		String consulta = textField_consulta.getText();
-		String SGBD = comboBox_Select_BD.getName();
+		String SGBD = (String) comboBox_Select_BD.getSelectedItem();
 		boolean opt;
-		if(comboBox_optimizado.getName() == "Optimizado") {
+		ConnectionAbstract conex = null;
+		if(comboBox_optimizado.getSelectedItem().equals("Optimizado")) {
 			opt = true;
 		}else {
 			opt = false;
 		}
+		String category = (String) comboBox_category.getSelectedItem();
 		
-		ConecctionAbstract conex= new ConecctionAbstract(consulta, SGBD, opt);
-		textArea.setText("Su consulta : '"+conex.get_Request()+"' ha sido realizada");
+		time_start = System.currentTimeMillis();
+		if(SGBD == "MySQL") {
+			conex= new ConnectionMySQL(opt);
+		}
+		conex.MakeQuery(consulta, category);
+		time_end = System.currentTimeMillis();
+		if(conex.QueryMade()) {
+			textArea.setText("Su consulta ha sido realizada");
+		}	
 		textField_consulta.setText("");
-		textField_tiempo.setText("Mucho tiempo");
+		textField_tiempo.setText((time_end - time_start) + "millis");
 		comboBox_consultas.addItem(consulta);
 	}
 }
