@@ -29,13 +29,16 @@ public class Search {
 		}else if(category == "Translation") {
 			result = "SELECT stable_id, transcript_id FROM translation WHERE "
 					+"(stable_id LIKE '"+ search + "');";
-/*		}else {
-			result = "SELECT g.gene_id, g.description"
-					+ "FROM gene g, transcript tr, translation tl "
-					+ "WHERE (g.description LIKE '%"+search+"%')"
-					+ "OR ((tr.description LIKE '%\"+search+\"%') AND ) ;";
+		}else {
+			result = "(SELECT stable_id, description FROM gene "
+					+ "WHERE (stable_id LIKE '"+search+"') OR (description LIKE"
+					+ " '%"+search+"%')) UNION "
+					+ "(SELECT stable_id, description FROM transcript WHERE "
+					+"(description LIKE '%"+search+"%') OR (stable_id LIKE '"
+					+ search + "')) UNION "
+					+ "(SELECT stable_id, transcript_id FROM translation WHERE "
+					+"(stable_id LIKE '"+ search + "'));";
 		}
-*/		}
 		return result;		
 	}	
 	

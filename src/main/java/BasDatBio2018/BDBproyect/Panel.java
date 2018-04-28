@@ -162,8 +162,9 @@ public class Panel extends JPanel {
 		}
 		conex.MakeQuery(consulta, category);
 		time_end = System.currentTimeMillis();
-		if(conex.QueryMade()) {
-			textArea.setText("Su consulta ha sido realizada");
+		if(conex.isTheQueryMade()) {
+			String QueryResult = conex.readQueryResult();
+			textArea.setText(QueryResult);
 		}	
 		textField_consulta.setText("");
 		textField_tiempo.setText((time_end - time_start) + "millis");

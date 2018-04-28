@@ -20,6 +20,8 @@ public abstract class ConnectionAbstract {
 	public abstract void MakeQuery(String search, String category);	
 	
 	//Combrueba si la consulta ha devuelto un resultado
-	public abstract boolean QueryMade();	
+	public abstract boolean isTheQueryMade();
+	
+	public abstract String readQueryResult();
 	
 }

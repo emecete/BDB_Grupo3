@@ -46,9 +46,9 @@ public class ConexionTest {
                    // Also there are many methods on the result set to return
                    //  the column as a particular type. Refer to the Sun documentation
                    //  for the list of valid conversions.
-                   System.out.println( "COLUMN " + i + " = " + rs.getObject(i) );
+                    System.out.print(rs.getObject(i) + "\t");
                 }
-            
+                System.out.print('\n');
             }
 
            

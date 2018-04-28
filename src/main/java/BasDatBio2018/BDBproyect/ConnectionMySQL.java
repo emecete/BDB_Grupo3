@@ -47,8 +47,29 @@ public class ConnectionMySQL extends ConnectionAbstract{
 	    }
 	}
 	
-	public boolean QueryMade() {
+	public boolean isTheQueryMade() {
 		return rs != null;
+	}
+	
+	public String readQueryResult() {
+		String result = "";
+		if(!isTheQueryMade()) {
+			throw new RuntimeException("No se ha realizado ninguna consulta");
+		}
+		try {
+			while ( rs.next() ) {
+                int numColumns = rs.getMetaData().getColumnCount();
+                for ( int i = 1 ; i <= numColumns ; i++ ) {
+                    result += rs.getObject(i) + "\t";
+                }
+                result += "\n";
+            }
+		}catch(SQLException ex) {
+			System.out.println("SQLException: " + ex.getMessage());
+            System.out.println("SQLState: " + ex.getSQLState());
+            System.out.println("VendorError: " + ex.getErrorCode());
+		}	
+		return result;
 	}
 	
 	public void MakeQuery(String search, String category) {
