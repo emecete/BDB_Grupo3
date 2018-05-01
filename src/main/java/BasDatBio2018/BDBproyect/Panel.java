@@ -86,7 +86,7 @@ public class Panel extends JPanel {
 		
 		comboBox_Select_BD = new JComboBox();
 		comboBox_Select_BD.setBounds(398, 155, 145, 42);
-		comboBox_Select_BD.setModel(new DefaultComboBoxModel(new String[] {"MySQL", "MariaDB", "SQLServer"}));
+		comboBox_Select_BD.setModel(new DefaultComboBoxModel(new String[] {"MySQL", "MariaDB", "PostgreeSQL"}));
 		add(comboBox_Select_BD);
 		
 		JLabel lblNewLabel = new JLabel("SGBD :");
@@ -161,6 +161,8 @@ public class Panel extends JPanel {
 			conex= new ConnectionMySQL(opt);
 		} else if (SGBD.equalsIgnoreCase("mariadb")) {
 			conex = new ConnectionMariaDB(opt);
+		} else if(SGBD == "PostgreeSQL") {
+			conex= new ConnectionPostgreeSQL(opt);
 		}
 		conex.MakeQuery(consulta, category);
 		time_end = System.currentTimeMillis();
