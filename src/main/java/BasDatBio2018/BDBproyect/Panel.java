@@ -159,6 +159,8 @@ public class Panel extends JPanel {
 		time_start = System.currentTimeMillis();
 		if(SGBD == "MySQL") {
 			conex= new ConnectionMySQL(opt);
+		} else if (SGBD.equalsIgnoreCase("mariadb")) {
+			conex = new ConnectionMariaDB(opt);
 		}
 		conex.MakeQuery(consulta, category);
 		time_end = System.currentTimeMillis();
